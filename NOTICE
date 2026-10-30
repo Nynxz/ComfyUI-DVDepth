@@ -1,0 +1,9 @@
+ComfyUI-DVDepth
+ComfyUI support for DVD: Deterministic Video Depth Estimation with Generative Priors, by Hongfei Zhang,
+Harold H. Chen, Chenfei Liao, Jing He et al., EnVision Research (https://github.com/EnVision-Research/DVD,
+code under the Apache License 2.0; weights under CC BY-NC 4.0, non-commercial).
+
+No model code is shipped: DVD is the Wan 2.1 T2V 1.3B architecture (Wan-AI, Apache License 2.0), which
+ComfyUI implements. dvd/depth.py reimplements the windowing and window alignment of the DVD repository's
+test_script/test_single_video.py; tests/reference.py copies those helpers verbatim for the parity tests.
+example_workflows/dvd_robot_navi.mp4 is a 640 px, 161-frame excerpt of demo/robot_navi.mp4 from that repository.

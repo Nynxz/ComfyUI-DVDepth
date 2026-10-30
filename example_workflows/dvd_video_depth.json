@@ -1,0 +1,443 @@
+{
+ "id": "d7d0e5a2-1f3b-4c8a-9e6d-0d7d3e9f0001",
+ "revision": 0,
+ "last_node_id": 9,
+ "last_link_id": 8,
+ "nodes": [
+  {
+   "id": 1,
+   "type": "LoadVideo",
+   "pos": [
+    0,
+    0
+   ],
+   "size": [
+    340,
+    320
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "VIDEO",
+     "type": "VIDEO",
+     "links": [
+      1
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "LoadVideo"
+   },
+   "widgets_values": [
+    "dvd_robot_navi.mp4"
+   ]
+  },
+  {
+   "id": 2,
+   "type": "GetVideoComponents",
+   "pos": [
+    390,
+    0
+   ],
+   "size": [
+    260,
+    130
+   ],
+   "flags": {},
+   "order": 1,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "video",
+     "type": "VIDEO",
+     "link": 1
+    }
+   ],
+   "outputs": [
+    {
+     "name": "images",
+     "type": "IMAGE",
+     "links": [
+      2
+     ]
+    },
+    {
+     "name": "audio",
+     "type": "AUDIO",
+     "links": []
+    },
+    {
+     "name": "fps",
+     "type": "FLOAT",
+     "links": [
+      6
+     ]
+    },
+    {
+     "name": "bit_depth",
+     "type": "COMBO",
+     "links": []
+    },
+    {
+     "name": "color_space",
+     "type": "COMBO",
+     "links": []
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "GetVideoComponents"
+   },
+   "widgets_values": []
+  },
+  {
+   "id": 3,
+   "type": "UNETLoader",
+   "pos": [
+    0,
+    380
+   ],
+   "size": [
+    340,
+    90
+   ],
+   "flags": {},
+   "order": 2,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "MODEL",
+     "type": "MODEL",
+     "links": [
+      3
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "UNETLoader"
+   },
+   "widgets_values": [
+    "dvd_1.1_bf16.safetensors",
+    "default"
+   ]
+  },
+  {
+   "id": 4,
+   "type": "VAELoader",
+   "pos": [
+    0,
+    520
+   ],
+   "size": [
+    340,
+    60
+   ],
+   "flags": {},
+   "order": 3,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "VAE",
+     "type": "VAE",
+     "links": [
+      4
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "VAELoader"
+   },
+   "widgets_values": [
+    "wan_2.1_vae.safetensors"
+   ]
+  },
+  {
+   "id": 5,
+   "type": "DVDVideoDepth",
+   "pos": [
+    700,
+    0
+   ],
+   "size": [
+    340,
+    330
+   ],
+   "flags": {},
+   "order": 4,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "model",
+     "type": "MODEL",
+     "link": 3
+    },
+    {
+     "name": "vae",
+     "type": "VAE",
+     "link": 4
+    },
+    {
+     "name": "images",
+     "type": "IMAGE",
+     "link": 2
+    }
+   ],
+   "outputs": [
+    {
+     "name": "depth",
+     "type": "IMAGE",
+     "links": [
+      5,
+      8
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "DVDVideoDepth"
+   },
+   "widgets_values": [
+    480,
+    640,
+    81,
+    21,
+    "video",
+    "grayscale",
+    false,
+    "input",
+    0.5,
+    false
+   ]
+  },
+  {
+   "id": 6,
+   "type": "CreateVideo",
+   "pos": [
+    1090,
+    0
+   ],
+   "size": [
+    300,
+    150
+   ],
+   "flags": {},
+   "order": 5,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "images",
+     "type": "IMAGE",
+     "link": 5
+    },
+    {
+     "name": "fps",
+     "type": "FLOAT",
+     "widget": {
+      "name": "fps"
+     },
+     "link": 6
+    },
+    {
+     "name": "audio",
+     "type": "AUDIO",
+     "link": null,
+     "shape": 7
+    }
+   ],
+   "outputs": [
+    {
+     "name": "VIDEO",
+     "type": "VIDEO",
+     "links": [
+      7
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "CreateVideo"
+   },
+   "widgets_values": [
+    30.0,
+    "auto",
+    "sRGB",
+    "none"
+   ]
+  },
+  {
+   "id": 7,
+   "type": "SaveVideo",
+   "pos": [
+    1440,
+    0
+   ],
+   "size": [
+    560,
+    520
+   ],
+   "flags": {},
+   "order": 6,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "video",
+     "type": "VIDEO",
+     "link": 7
+    }
+   ],
+   "outputs": [
+    {
+     "name": "video",
+     "type": "VIDEO",
+     "links": []
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "SaveVideo"
+   },
+   "widgets_values": [
+    "video/dvd_depth",
+    "auto",
+    "auto"
+   ]
+  },
+  {
+   "id": 8,
+   "type": "PreviewImage",
+   "pos": [
+    1090,
+    220
+   ],
+   "size": [
+    300,
+    300
+   ],
+   "flags": {},
+   "order": 7,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "images",
+     "type": "IMAGE",
+     "link": 8
+    }
+   ],
+   "outputs": [
+    {
+     "name": "images",
+     "type": "IMAGE",
+     "links": []
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "PreviewImage"
+   },
+   "widgets_values": [],
+   "title": "Depth frames"
+  },
+  {
+   "id": 9,
+   "type": "MarkdownNote",
+   "pos": [
+    0,
+    640
+   ],
+   "size": [
+    700,
+    520
+   ],
+   "flags": {},
+   "order": 8,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [],
+   "properties": {
+    "Node name for S&R": "MarkdownNote"
+   },
+   "widgets_values": [
+    "## DVD: video depth in one pass\n\n[DVD](https://github.com/EnVision-Research/DVD) (Deterministic Video Depth, EnVision Research) is Wan 2.1 T2V 1.3B retrained to regress depth: clean video latents in, depth latents out, one forward pass, no sampling, no text encoder. ComfyUI runs Wan 2.1 natively, so the converted weights load with the stock loaders and **DVD Video Depth** runs the pass with DVD's windowing and window alignment.\n\n**Models** (put each in the folder shown)\n\n| File | Folder | Source |\n|---|---|---|\n| `dvd_1.1_bf16.safetensors` | `models/diffusion_models` | [nynxz/DVD](https://huggingface.co/nynxz/DVD) |\n| `wan_2.1_vae.safetensors` | `models/vae` | [Comfy-Org/Wan_2.1_ComfyUI_repackaged](https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/tree/main/split_files/vae) |\n\n**Settings**\n\n- `height` x `width` 480 x 640: the frames are scaled to cover this box (aspect kept) and the depth is resized back. This is DVD's reference setting; bigger is slower and off-distribution.\n- `window_size` 81 / `overlap` 21: frames per pass and the frames shared by consecutive windows, where they are aligned (scale + shift) and cross-faded. DVD's demo settings. Lower the window for less VRAM.\n- `normalize` video: one min/max for the whole clip, so the scale stays consistent across frames. `turbo` colours it. Near is bright; `invert` flips that.\n- About 7 GB of VRAM and 6 s per 81-frame window at 480 x 880 on an RTX 5090 (fp16).\n"
+   ],
+   "title": "DVD Video Depth"
+  }
+ ],
+ "links": [
+  [
+   1,
+   1,
+   0,
+   2,
+   0,
+   "VIDEO"
+  ],
+  [
+   2,
+   2,
+   0,
+   5,
+   2,
+   "IMAGE"
+  ],
+  [
+   3,
+   3,
+   0,
+   5,
+   0,
+   "MODEL"
+  ],
+  [
+   4,
+   4,
+   0,
+   5,
+   1,
+   "VAE"
+  ],
+  [
+   5,
+   5,
+   0,
+   6,
+   0,
+   "IMAGE"
+  ],
+  [
+   6,
+   2,
+   2,
+   6,
+   1,
+   "FLOAT"
+  ],
+  [
+   7,
+   6,
+   0,
+   7,
+   0,
+   "VIDEO"
+  ],
+  [
+   8,
+   5,
+   0,
+   8,
+   0,
+   "IMAGE"
+  ]
+ ],
+ "groups": [],
+ "config": {},
+ "extra": {
+  "ds": {
+   "scale": 0.75,
+   "offset": [
+    40,
+    40
+   ]
+  }
+ },
+ "version": 0.4
+}

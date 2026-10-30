@@ -1,0 +1,20 @@
+[project]
+name = "comfyui-dvdepth"
+version = "0.1.0"
+description = "Native ComfyUI support for DVD (Deterministic Video Depth): temporally stable video depth from a Wan 2.1 model in one forward pass. Converted weights for the stock loaders plus one node. No extra requirements."
+authors = [{ name = "Nynxz", email = "contact@nynxz.com" }]
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.10"
+dependencies = []
+
+[tool.comfy]
+PublisherId = "nynxz"
+DisplayName = "DVD Video Depth"
+
+[tool.ruff]
+target-version = "py310"
+line-length = 130
+
+[tool.ruff.lint.per-file-ignores]
+"tests/reference.py" = ["RUF059", "E741", "N806", "E401", "F841", "I001", "BLE001", "C408", "SIM905"]  # verbatim reference code from the DVD repo
